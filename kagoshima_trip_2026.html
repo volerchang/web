@@ -139,12 +139,12 @@
 <!-- Main Tab Nav -->
 <div class="tab-nav">
   <div class="tab-nav-inner">
-    <button class="tab-btn active" onclick="showTab('d',0)">D1 8/25</button>
-    <button class="tab-btn" onclick="showTab('d',1)">D2 8/26</button>
-    <button class="tab-btn" onclick="showTab('d',2)">D3 8/27</button>
-    <button class="tab-btn" onclick="showTab('d',3)">D4 8/28</button>
-    <button class="tab-btn" onclick="showTab('d',4)">D5 8/29</button>
-    <button class="tab-btn mc-btn" onclick="showTab('d',5)">🗺 Map Code</button>
+    <button class="tab-btn active" data-pane="d-pane-0" onclick="showTab(this)">D1 8/25</button>
+    <button class="tab-btn" data-pane="d-pane-1" onclick="showTab(this)">D2 8/26</button>
+    <button class="tab-btn" data-pane="d-pane-2" onclick="showTab(this)">D3 8/27</button>
+    <button class="tab-btn" data-pane="d-pane-3" onclick="showTab(this)">D4 8/28</button>
+    <button class="tab-btn" data-pane="d-pane-4" onclick="showTab(this)">D5 8/29</button>
+    <button class="tab-btn mc-btn" data-pane="d-pane-5" onclick="showTab(this)">🗺 Map Code</button>
   </div>
 </div>
 
@@ -681,9 +681,6 @@
   </div>
 
 </div>
-</div>
-
-<!-- Footer --></div>
 
 <!-- Map Code Pane -->
 <div id="d-pane-5" class="tab-pane">
@@ -748,15 +745,13 @@
 </div>
 
 <script>
-function showTab(group, idx) {
-  const total = group === 'd' ? 6 : 4;
-  for (let i = 0; i < total; i++) {
-    const pane = document.getElementById(group + '-pane-' + i);
-    if (pane) pane.classList.toggle('active', i === idx);
-  }
-  const btns = document.querySelectorAll('.tab-btn');
-  btns.forEach((b, i) => b.classList.toggle('active', i === idx));
-  btns[idx].scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+function showTab(btn) {
+  const targetId = btn.getAttribute('data-pane');
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById(targetId).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  btn.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
   window.scrollTo({top: document.querySelector('.tab-nav').offsetTop - 4, behavior:'smooth'});
 }
 
