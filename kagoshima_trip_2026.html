@@ -95,6 +95,8 @@
   .tips { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; max-width:500px; margin:0 auto; }
   .tip { background:rgba(255,255,255,0.06); padding:8px 14px; border-radius:8px; font-size:11px; }
 </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
 
@@ -144,6 +146,7 @@
     <button class="tab-btn" data-pane="d-pane-2" onclick="showTab(this)">D3 8/27</button>
     <button class="tab-btn" data-pane="d-pane-3" onclick="showTab(this)">D4 8/28</button>
     <button class="tab-btn" data-pane="d-pane-4" onclick="showTab(this)">D5 8/29</button>
+    <button class="tab-btn" data-pane="d-pane-map" onclick="showTab(this)">📍 地圖</button>
     <button class="tab-btn mc-btn" data-pane="d-pane-5" onclick="showTab(this)">🗺 Map Code</button>
   </div>
 </div>
@@ -685,6 +688,54 @@
   </div>
 </div>
 
+<div id="d-pane-map" class="tab-pane">
+  <div style="margin-bottom:16px;">
+    <div style="background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(26,20,16,0.08);">
+      <div style="padding:14px 20px 10px;border-bottom:1px solid var(--mist);">
+        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px;">📍 行程全覽地圖</div>
+        <div style="font-size:11px;color:var(--ash);">點擊圖示可查看景點詳情</div>
+      </div>
+      <!-- 圖例 -->
+      <div style="display:flex;flex-wrap:wrap;gap:8px;padding:10px 20px;border-bottom:1px solid var(--mist);font-size:11px;">
+        <span>🔴 住宿</span>
+        <span>🟠 D1 霧島・櫻島</span>
+        <span>🟡 D2 佐多岬・指宿</span>
+        <span>🟢 D3 知覧・市區</span>
+        <span>🔵 D4 鹿兒島市</span>
+        <span>⚪ 交通</span>
+      </div>
+      <!-- 地圖 -->
+      <div id="map" style="width:100%;height:520px;"></div>
+    </div>
+  </div>
+
+  <!-- 景點列表 -->
+  <div style="background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(26,20,16,0.08);margin-bottom:16px;">
+    <div style="padding:12px 20px;background:var(--warm);font-size:11px;font-weight:700;color:var(--sand);letter-spacing:2px;">🏨 住宿</div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🔴 GANADAN Cottage（D1）</span><span style="font-size:11px;color:var(--ash);">櫻島</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🔴 Ibusuki Airbnb・湯の浜（D2）</span><span style="font-size:11px;color:var(--ash);">指宿</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🔴 FAV LUX 天文館（D3・D4）</span><span style="font-size:11px;color:var(--ash);">鹿兒島市</span></div>
+    <div style="padding:12px 20px;background:var(--warm);font-size:11px;font-weight:700;color:var(--sand);letter-spacing:2px;">🟠 D1 霧島・櫻島景點</div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>⛩ 霧島神宮</span><span style="font-size:11px;color:var(--ash);">霧島市</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🌋 湯之平展望所</span><span style="font-size:11px;color:var(--ash);">櫻島</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🏖 烏島展望所</span><span style="font-size:11px;color:var(--ash);">櫻島</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🌊 有村熔岩展望所</span><span style="font-size:11px;color:var(--ash);">櫻島</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>⛩ 黑神埋沒鳥居</span><span style="font-size:11px;color:var(--ash);">櫻島</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🦶 熔岩海濱公園・足湯</span><span style="font-size:11px;color:var(--ash);">櫻島</span></div>
+    <div style="padding:12px 20px;background:var(--warm);font-size:11px;font-weight:700;color:var(--sand);letter-spacing:2px;">🟡 D2 佐多岬・指宿</div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🗺 佐多岬展望台</span><span style="font-size:11px;color:var(--ash);">南大隅</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>⛴ 根占港（渡輪）</span><span style="font-size:11px;color:var(--ash);">南大隅</span></div>
+    <div style="padding:12px 20px;background:var(--warm);font-size:11px;font-weight:700;color:var(--sand);letter-spacing:2px;">🟢 D3 知覧・北上</div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>♨ 砂蒸溫泉・砂樂</span><span style="font-size:11px;color:var(--ash);">指宿</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>⛩ 知覧武家屋敷庭園群</span><span style="font-size:11px;color:var(--ash);">南九州市</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🐟 池田湖</span><span style="font-size:11px;color:var(--ash);">指宿</span></div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🏕 Alpen Outdoors</span><span style="font-size:11px;color:var(--ash);">鹿兒島市</span></div>
+    <div style="padding:12px 20px;background:var(--warm);font-size:11px;font-weight:700;color:var(--sand);letter-spacing:2px;">🔵 D4 鹿兒島市區</div>
+    <div style="padding:10px 20px;border-bottom:1px solid var(--mist);font-size:13px;display:flex;justify-content:space-between;"><span>🏯 仙巖園</span><span style="font-size:11px;color:var(--ash);">鹿兒島市</span></div>
+    <div style="padding:10px 20px;font-size:13px;display:flex;justify-content:space-between;"><span>🌿 城山展望台</span><span style="font-size:11px;color:var(--ash);">鹿兒島市</span></div>
+  </div>
+</div>
+
 <div id="d-pane-5" class="tab-pane">
   <div class="mc-section">
     <div class="mc-tab-nav">
@@ -763,6 +814,70 @@ function showMcTab(idx) {
   }
   document.querySelectorAll('.mc-tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
 }
+</script>
+
+<script>
+// 地圖初始化（只在切換到地圖分頁時初始化一次）
+let mapInitialized = false;
+function initMap() {
+  if (mapInitialized) return;
+  mapInitialized = true;
+
+  const map = L.map('map').setView([31.35, 130.62], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  function icon(color, emoji) {
+    return L.divIcon({
+      html: `<div style="background:${color};border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);">${emoji}</div>`,
+      iconSize:[32,32], iconAnchor:[16,16], popupAnchor:[0,-18], className:''
+    });
+  }
+
+  const spots = [
+    // 住宿（紅）
+    {lat:31.6252, lng:130.6636, emoji:'🏡', color:'#e53935', name:'GANADAN Cottage', desc:'D1住宿・櫻島海濱'},
+    {lat:31.2300, lng:130.6519, emoji:'🏠', color:'#e53935', name:'Ibusuki Airbnb', desc:'D2住宿・湯の浜'},
+    {lat:31.5877, lng:130.5551, emoji:'🏨', color:'#e53935', name:'FAV LUX 天文館', desc:'D3・D4住宿'},
+    // 交通（灰）
+    {lat:31.7941, lng:130.7191, emoji:'🚗', color:'#78909c', name:'Toyota 機場店', desc:'D1取車'},
+    {lat:31.5844, lng:130.5465, emoji:'🚗', color:'#78909c', name:'Toyota 中央站店', desc:'D3 19:00還車'},
+    // D1 霧島・櫻島（橘）
+    {lat:31.8587, lng:130.8714, emoji:'⛩', color:'#ef6c00', name:'霧島神宮', desc:'D1・南九州最強能量神社'},
+    {lat:31.5915, lng:130.6300, emoji:'🌋', color:'#ef6c00', name:'湯之平展望所', desc:'D1・海拔373m最高展望台'},
+    {lat:31.5818, lng:130.6011, emoji:'🏖', color:'#ef6c00', name:'烏島展望所', desc:'D1・熔岩海岸展望台'},
+    {lat:31.5551, lng:130.6789, emoji:'🌊', color:'#ef6c00', name:'有村熔岩展望所', desc:'D1・大片黑色熔岩地形'},
+    {lat:31.5846, lng:130.7063, emoji:'⛩', color:'#ef6c00', name:'黑神埋沒鳥居', desc:'D1・1914年火山掩埋'},
+    {lat:31.5915, lng:130.5934, emoji:'🦶', color:'#ef6c00', name:'熔岩海濱公園・足湯', desc:'D1・日本最長免費足湯'},
+    // D2 佐多岬・指宿（黃）
+    {lat:30.9973, lng:130.6591, emoji:'🗺', color:'#f9a825', name:'佐多岬展望台', desc:'D2・日本本土最南端'},
+    {lat:31.2161, lng:130.7629, emoji:'⛴', color:'#f9a825', name:'根占港', desc:'D2・フェリーなんきゅう乘船'},
+    // D3 知覧・市區（綠）
+    {lat:31.2298, lng:130.6520, emoji:'♨', color:'#2e7d32', name:'砂蒸溫泉・砂樂', desc:'D3・世界唯一天然砂蒸'},
+    {lat:31.3774, lng:130.4427, emoji:'⛩', color:'#2e7d32', name:'知覧武家屋敷庭園群', desc:'D3・薩摩小京都'},
+    {lat:31.2351, lng:130.5636, emoji:'🐟', color:'#2e7d32', name:'池田湖', desc:'D3・九州最大破火山口湖'},
+    {lat:31.5706, lng:130.5655, emoji:'🏕', color:'#2e7d32', name:'Alpen Outdoors', desc:'D3・戶外用品購物'},
+    // D4 鹿兒島市（藍）
+    {lat:31.5962, lng:130.5500, emoji:'🌿', color:'#1565c0', name:'城山展望台', desc:'D4・俯瞰全市・錦江灣・櫻島'},
+    {lat:31.6174, lng:130.5772, emoji:'🏯', color:'#1565c0', name:'仙巖園', desc:'D4・島津家別邸・世界遺產'},
+  ];
+
+  spots.forEach(s => {
+    L.marker([s.lat, s.lng], {icon: icon(s.color, s.emoji)})
+      .bindPopup(`<strong>${s.emoji} ${s.name}</strong><br><span style="font-size:12px;color:#666">${s.desc}</span>`)
+      .addTo(map);
+  });
+}
+
+// 覆寫showTab，地圖分頁切換時初始化
+const _origShowTab = showTab;
+showTab = function(btn) {
+  _origShowTab(btn);
+  if (btn.getAttribute('data-pane') === 'd-pane-map') {
+    setTimeout(initMap, 100);
+  }
+};
 </script>
 </body>
 </html>
