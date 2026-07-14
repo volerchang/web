@@ -11,7 +11,7 @@
     --lava: #c0392b; --warm: #f5efe6; --paper: #faf7f2; --mist: #e8ddd0;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--paper); color:var(--ink); font-family:'Noto Sans TC',sans-serif; font-weight:300; line-height:1.7; }
+  body { background:var(--paper); color:var(--ink); font-family:'Noto Sans TC',sans-serif; font-weight:300; line-height:1.7; min-height:100vh; overflow-x:hidden; }
 
   /* Hero */
   .hero-wrap { background:var(--ink); }
@@ -41,12 +41,12 @@
   .tab-btn.mc-btn.active { color:#e65100; border-bottom-color:#e65100; }
 
   /* Tab Content */
-  .tab-pane { display:none; padding:20px 16px; max-width:680px; margin:0 auto; }
+  .tab-pane { display:none; padding:20px 16px; max-width:760px; margin:0 auto; min-height:400px; }
   .tab-pane.active { display:block; animation:fadeUp 0.3s ease; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
 
   /* Day card */
-  .day-card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(26,20,16,0.08); }
+  .day-card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(26,20,16,0.08); width:100%; }
   .day-header { padding:16px 20px 14px; border-bottom:1px solid var(--mist); display:flex; align-items:baseline; gap:12px; }
   .day-num { font-family:'Noto Serif TC',serif; font-size:28px; font-weight:700; color:var(--sand); line-height:1; min-width:40px; }
   .day-info { flex:1; }
@@ -227,13 +227,15 @@
           <div><span class="tag tag-nature">自然</span></div>
         </div>
       </div>
-          <div class="event-desc">海拔373m・一般遊客可到達的最高點，360度全景：大正熔岩、北嶽山面、錦江灣、鹿兒島市景。石牆中藏有7顆心形石，找找看！</div>
-          <div><span class="tag tag-nature">自然</span></div>
-        </div>
-      </div>
       <div class="event">
         <div class="event-time">16:15</div>
         <div class="event-dot highlight"></div>
+        <div class="event-body">
+          <div class="event-title">🌋 湯之平展望所</div>
+          <div class="event-desc">海拔373m・一般遊客可到達的最高點，360度全景：大正熔岩、北嶽山面、錦江灣、鹿兒島市景。石牆中藏有7顆心形石，找找看！</div>
+          <div><span class="tag tag-nature">自然</span></div>
+        </div>
+      </div>hlight"></div>
         <div class="event-body">
           <div class="event-title">🌋 湯之平展望所</div>
           <div class="event-desc">熔岩海岸旁的展望台，火山與錦江灣海灣交接的壯麗景色</div>
